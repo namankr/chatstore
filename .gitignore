@@ -1,0 +1,29 @@
+# Marketing / personal notes
+linkedin-post.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ChromaDB data
+chroma_db/
+
+# SQLite databases
+*.db
+
+# Environment variables
+.env

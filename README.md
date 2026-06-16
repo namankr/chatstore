@@ -20,6 +20,10 @@ Most solutions force you into a framework (LangChain), require a running server 
 
 ---
 
+## Requirements
+
+- Python **3.10, 3.11, or 3.12**
+
 ## Install
 
 **Core (SQLite + token counting):**

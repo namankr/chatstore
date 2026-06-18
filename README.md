@@ -11,6 +11,57 @@ No servers. No Docker. No cloud accounts. Just install and start building.
 
 ---
 
+## Architecture
+
+```mermaid
+flowchart TB
+    subgraph User["Your Application"]
+        APP["app.py\nsave_message()\nbuild_context()\nstore_in_memory()\nretrieve_from_memory()"]
+    end
+
+    subgraph ChatService["ChatService  (chatstore/service.py)"]
+        direction TB
+        CORE["Core API\nsave_message()\nload_history()\nload_history_windowed()\nbuild_context()\nclear_session()\nlist_sessions()"]
+        TOKENS["Token Counter\ncount_tokens()\n── tiktoken cl100k_base ──"]
+        WINDOW["Sliding Window\nmax_history_turns\nmax_context_tokens"]
+        CORE --> TOKENS
+        CORE --> WINDOW
+    end
+
+    subgraph V2["VectorMemory  (chatstore/memory.py)  optional"]
+        direction TB
+        CHUNKER["Text Chunker\n_chunk_text()\n400 words · 20% overlap"]
+        EMBEDDER["Sentence Transformers\nall-MiniLM-L6-v2\nlocal · no API key"]
+        CHROMA["ChromaDB\nPersistentClient\n./chroma_db"]
+        CHUNKER --> EMBEDDER --> CHROMA
+    end
+
+    subgraph Storage["Persistent Storage"]
+        SQLITE[("SQLite\nchat_history.db\nmessages table\nproject · session · role · content · ts")]
+        CHROMAFS[("ChromaDB files\n./chroma_db\nvector embeddings\nfiltered by session_id")]
+    end
+
+    subgraph LLM["Any LLM  (your choice)"]
+        direction LR
+        OAI["OpenAI\nGPT-4o"]
+        GEM["Google\nGemini"]
+        ANT["Anthropic\nClaude"]
+        OLL["Ollama\nLocal"]
+    end
+
+    APP -->|"pip install chatstore"| ChatService
+    APP -->|"enable_semantic_search=True\npip install chatstore[semantic]"| V2
+
+    CORE -->|"INSERT / SELECT"| SQLITE
+    V2 -->|"upsert / query"| CHROMAFS
+
+    ChatService -->|"context = build_context()\nextra_context from retrieve_from_memory()"| LLM
+    LLM -->|"reply"| APP
+    APP -->|"save_message('assistant', reply)"| CORE
+```
+
+---
+
 ## The Problem It Solves
 
 Every LLM application needs the same three things:

@@ -223,8 +223,8 @@ class ChatService:
         """Return all session IDs that exist for this project."""
         with self._conn() as conn:
             rows = conn.execute(
-                "SELECT DISTINCT session FROM messages "
-                "WHERE project=? ORDER BY MIN(ts)",
+                "SELECT session FROM messages "
+                "WHERE project=? GROUP BY session ORDER BY MIN(ts)",
                 (self.project_id,),
             ).fetchall()
         return [r[0] for r in rows]

@@ -2,7 +2,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/chatstore.svg)](https://pypi.org/project/chatstore/)
 [![Python versions](https://img.shields.io/pypi/pyversions/chatstore.svg)](https://pypi.org/project/chatstore/)
-[![CI](https://github.com/your-username/chatstore/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/chatstore/actions/workflows/ci.yml)
+[![CI](https://github.com/namankr/chatstore/actions/workflows/ci.yml/badge.svg)](https://github.com/namankr/chatstore/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A lightweight, framework-agnostic persistent chat service for LLM applications.

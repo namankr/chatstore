@@ -40,8 +40,9 @@ dev = [
 ]
 
 [project.urls]
-"Source Code" = "https://github.com/your-org/chatstore"
-"Bug Tracker" = "https://github.com/your-org/chatstore/issues"
+"Homepage" = "https://github.com/namankr/chatstore"
+"Source Code" = "https://github.com/namankr/chatstore"
+"Bug Tracker" = "https://github.com/namankr/chatstore/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
